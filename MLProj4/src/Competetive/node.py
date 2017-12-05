@@ -8,9 +8,9 @@ class Node:
             self.weights.append(val)
     def updateWeights(self, point, learningRate):
         for i in range(len(self.weights)):
-            self.weights[i] += learningRate * (point[i] - self.weights[i])
+            self.weights[i] -= learningRate * (point[i] - self.weights[i])
     def getActive(self, dataP):
         sum = 0
-        for point in range(len(dataP)):
-            sum += dataP[point] * self.weights[point]
+        for att in range(len(dataP)):
+            sum += dataP[att] * self.weights[att]
         return sum

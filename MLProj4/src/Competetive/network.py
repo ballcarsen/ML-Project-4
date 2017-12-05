@@ -13,9 +13,10 @@ class Network:
     def makeNet(self):
         for i in range(self.numClusters):
             self.outputLayer.append(Node(len(self.data[0])))
+            print(self.outputLayer[i].weights)
             self.clusters.append(Cluster())
             self.clusters[i].clusterPoints.pop()
-            print(self.clusters[i].clusterPoints)
+
     def train(self):
         for point in self.data:
             activs = []
