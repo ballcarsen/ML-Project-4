@@ -13,6 +13,7 @@ def graph(data, k):
     colors = ['yellow', 'gray', 'pink', 'orange', 'black']
     for i in range(k):
         if len(data[i]) > 1:
+            print(data[i] , 'data')
             x,y = np.array(data[i]).T
             plt.scatter(x,y, c = colors[i])
     plt.show()

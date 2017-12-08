@@ -23,18 +23,17 @@ class Network:
             for Node in self.outputLayer:
                 activs.append(Node.getActive(point))
             index = activs.index(max(activs))
-            p1 = point
-            self.clusters[index].addPoint(p1)
+            self.clusters[index].addPoint(point)
             self.outputLayer[activs.index(max(activs))].updateWeights(point, self.learningRate)
             activs.clear()
+
     def feedIn(self, data):
         for point in data:
             activs = []
             for Node in self.outputLayer:
                 activs.append(Node.getActive(point))
             index = activs.index(max(activs))
-            p1 = point
-            self.clusters[index].addPoint(p1)
+            self.clusters[index].addPoint(point)
             activs.clear()
 
 

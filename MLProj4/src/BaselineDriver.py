@@ -15,21 +15,37 @@ d1.readData('HTRU2.txt')
 d1.scale()
 #print(d1.data)
 
-k = 11
-
+k = 3
 mockData = []
-for i in range(20):
+for i in range(200):
     point = []
     for j in range(2):
-        val = rand.uniform(0,.5)
+        val = rand.uniform(0,.2)
         point.append(val)
     mockData.append(point)
+
     point = []
     for j in range(2):
-        val = rand.uniform(.5,1)
+        val = rand.uniform(.8,1)
         point.append(val)
     mockData.append(point)
-d1 = dbScan(3, .05, mockData)
+
+    point = []
+    val = rand.uniform(0, .2)
+    point.append(val)
+    val = rand.uniform(.8, 1)
+    point.append(val)
+    mockData.append(point)
+
+    point = []
+    val = rand.uniform(.8, 1)
+    point.append(val)
+    val = rand.uniform(0, .2)
+    point.append(val)
+    mockData.append(point)
+
+
+d1 = dbScan(30, .1, mockData)
 '''
 d1 = Data(2)
 d1.data = mockData
@@ -38,15 +54,15 @@ theData = []
 for i in range(5):
     for k in d1.crossValidatedTrain:
         theData.append(k)
-
-N1 = Network(d1.data, k, .5)
+'''
+N1 = Network(mockData, k, .005)
 N1.makeNet()
 N1.train()
 #for i in range(1, 6):
     #N1.feedIn(d1.crossValidatedTrain[i])
 N1.print()
 
-k1 = KMeans(d1.data, k)
+k1 = KMeans(mockData, k)
 k1.cluster()
 k1.reCluster()
 k1.print()
@@ -61,4 +77,3 @@ for i in range(k):
     data2.append(k1.clusters[i].clusterPoints)
 calculations.graph(data1,k)
 calculations.graph(data2,k)
-'''
