@@ -8,6 +8,7 @@ import numpy.random as rand
 from Competetive.network import Network
 from KMeans.kMeans import KMeans
 import calculations
+from dbScan import dbScan
 
 d1 = Data(2)
 d1.readData('HTRU2.txt')
@@ -15,9 +16,9 @@ d1.scale()
 #print(d1.data)
 
 k = 11
-'''
+
 mockData = []
-for i in range(1000):
+for i in range(20):
     point = []
     for j in range(2):
         val = rand.uniform(0,.5)
@@ -28,8 +29,8 @@ for i in range(1000):
         val = rand.uniform(.5,1)
         point.append(val)
     mockData.append(point)
-
-
+d1 = dbScan(3, .05, mockData)
+'''
 d1 = Data(2)
 d1.data = mockData
 d1.getFolds()
@@ -37,7 +38,7 @@ theData = []
 for i in range(5):
     for k in d1.crossValidatedTrain:
         theData.append(k)
-'''
+
 N1 = Network(d1.data, k, .5)
 N1.makeNet()
 N1.train()
@@ -52,7 +53,7 @@ k1.print()
 
 print(N1.getFitness())
 print(k1.getFitness())
-'''
+
 data1 = []
 data2 =[]
 for i in range(k):
