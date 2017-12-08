@@ -5,17 +5,17 @@
 #shuttle 5
 from Data import Data
 import numpy.random as rand
-from Competetive.network import Network
-from KMeans.kMeans import KMeans
+#from Competetive.network import Network
+#from KMeans.kMeans import KMeans
 import calculations
-
-d1 = Data(2)
-d1.readData('HTRU2.txt')
-d1.scale()
+from PSO.PSOClusterAlg import PSOClusterAlg
+#d1 = Data(2)
+#d1.readData('HTRU2.txt')
+#d1.scale()
 #print(d1.data)
 
-k = 11
-'''
+
+
 mockData = []
 for i in range(1000):
     point = []
@@ -30,6 +30,19 @@ for i in range(1000):
     mockData.append(point)
 
 
+k = 2
+
+pso = PSOClusterAlg(mockData,k,10)
+
+avgFitness = pso.train(10)
+bestClusters = pso.getBestClusters()
+data = []
+for c in bestClusters:
+    data.append(c.clusterPoints)
+calculations.graph(data,k)
+
+print(avgFitness)
+'''
 d1 = Data(2)
 d1.data = mockData
 d1.getFolds()
@@ -37,7 +50,7 @@ theData = []
 for i in range(5):
     for k in d1.crossValidatedTrain:
         theData.append(k)
-'''
+
 N1 = Network(d1.data, k, .5)
 N1.makeNet()
 N1.train()
@@ -52,7 +65,7 @@ k1.print()
 
 print(N1.getFitness())
 print(k1.getFitness())
-'''
+
 data1 = []
 data2 =[]
 for i in range(k):

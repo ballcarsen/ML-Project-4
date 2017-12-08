@@ -15,11 +15,15 @@ class KMeans:
         self.meansIndex = [None for c in range(self.k)]
         self.meansIndex = random.sample(range(0,len(self.dataPoints)), self.k)
         self.clusters = [cluster for x in range(self.k)]
-        #Creates a new cluster object for each random mean data point
+        # Creates a new cluster object for each random mean data point
         for i in range(len(self.meansIndex)):
             temporary = self.meansIndex[i]
             temp = cluster.Cluster(self.dataPoints[temporary])
             self.clusters[i] = temp
+
+
+    def setClusters(self, clusters):
+        self.clusters = clusters
 
     #Assigns 
     def cluster(self):
@@ -47,18 +51,21 @@ class KMeans:
         tempMeans = [[0 for i in range(len(self.clusters[0].mean))] for j in range(self.k)]
         for i in range(len(self.clusters) - 1):
             tempMeans[i] = self.clusters[i].mean
-        
         while(changed == True):                  
-            for i in self.clusters:
-                i.calcCentroid()
-                i.clusterPoints = [[]]
-            self.cluster()
+            self.reCenter()
             changed = False
             for i in range(len(self.clusters) - 1):
                 for j in range(len(self.clusters[i].mean) - 1):
                     if (math.fabs(tempMeans[i][j] - self.clusters[i].mean[j])) > 0.00001:
                         changed = True
                 tempMeans[i] = self.clusters[i].mean
+
+    def reCenter(self):
+        for i in self.clusters:
+            i.calcCentroid()
+            i.clusterPoints = [[]]
+        self.cluster()
+
         #Calculates the distance in between two vectors
     def calcDistance(self, d1, d2):
         distance = 0.0
@@ -67,16 +74,20 @@ class KMeans:
             distance += math.pow((d1[i] - (d2[i])),2) 
         #returns the Euclidean distance between two vectors
         return math.sqrt(distance)
+
     def graph(self):
         print(self.clusters[0].clusterPoints)
+
     def print(self):
         for i in self.clusters:
             print(i.clusterPoints)
+
     def getFitness(self):
         sum = 0
         for cluster in self.clusters:
             sum += cluster.calcFitness()
         return (sum / self.k)
+
 if __name__ == "__main__":
     data = [[1,1],[1,1],[2,2],[2,2],[5,5]]
     means1 = KMeans(data, 2)
