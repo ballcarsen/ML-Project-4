@@ -5,7 +5,7 @@ class Cluster:
     def __init__(self, mean = 0):
         
         self.mean = mean
-        self.clusterPoints = [[]]
+        self.clusterPoints = []
     #adds a data point to the closet mean
     def addPoint(self, point):
         self.clusterPoints.append(point)
@@ -21,7 +21,7 @@ class Cluster:
             sum[k] /= float(len(self.clusterPoints))
 
         self.mean = sum
-        #self.clusterPoints = [[]]
+        #self.clusterPoints = []
     def getMean(self):
         return self.mean
     def calcFitness(self):
