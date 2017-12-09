@@ -59,6 +59,7 @@ class Particle:
 
     # update particle velocity
     def updateVelocity(self):
+        print("\n \n update velocity called")
         #for every attribute of every center: set velocity
         for center in range(len(self.clusters)):
             for attribute in range(len(self.clusters[0].mean)):
@@ -74,12 +75,13 @@ class Particle:
                 print(len(self.globalBest))
                 print(len(self.clusters))
                 print(len(self.velocity))
-
+                '''
+                print("center: ", center, " attribute: ", attribute)
                 print(self.globalBest[center].mean[attribute])
                 print(self.clusters[center].mean[attribute])
-                
+
                 print("velocity " , self.velocity[center][attribute])
-                '''
+
 
                 self.velocity[center][attribute] = self.velocity[center][attribute] + \
                                                    ((rand1 * (self.globalBest[center].mean[attribute] - self.clusters[center].mean[attribute]))) + \

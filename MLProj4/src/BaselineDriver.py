@@ -14,9 +14,9 @@ from PSO.PSOClusterAlg import PSOClusterAlg
 #d1.scale()
 #print(d1.data)
 
-k = 5
+k = 4
 mockData = []
-for i in range(10):
+for i in range(5):
     point = []
     for j in range(2):
         val = rand.uniform(0,.2)
@@ -43,16 +43,17 @@ for i in range(10):
     mockData.append(point)
 
 
-pso = PSOClusterAlg(mockData,k,10)
+pso = PSOClusterAlg(mockData,k,4)
 
-avgFitness = pso.train(10)
+avgFitness = pso.train(2)
 bestClusters = pso.getBestClusters()
 data = []
 for c in bestClusters:
     data.append(c.clusterPoints)
+    print("my cluster points: " , c.clusterPoints)
 calculations.graph(data,k)
 
-print(avgFitness)
+print("fitness ", avgFitness)
 '''
 d1 = Data(2)
 d1.data = mockData
