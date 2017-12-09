@@ -19,7 +19,7 @@ class Cluster:
                     sum[j] += temp[j]
         for k in range(len(sum)):
             sum[k] /= float(len(self.clusterPoints))
-        print("sum: ", sum)
+        #print("sum: ", sum)
         self.mean = sum
         #self.clusterPoints = [[]]
     def getMean(self):
@@ -28,10 +28,10 @@ class Cluster:
 
         sum = 0
         if(len(self.clusterPoints) == 0):
-            print("empty cluster")
-            return 10
+            #print("empty cluster")
+            return 100000000
         else:
             self.calcCentroid()
             for point in self.clusterPoints:
                 sum += calcDistance(point,self.mean)
-                return (sum / len(self.clusterPoints))
+            return (sum / len(self.clusterPoints))

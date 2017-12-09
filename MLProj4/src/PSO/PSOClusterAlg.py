@@ -11,44 +11,40 @@ class PSOClusterAlg:
 
     # get best set of clusters generated
     def getBestClusters(self):
-        return self.findBest().getClusters()
+        return self.globalBest.getClusters()
 
     def train(self, maxIterations):
         self.initParticles()
         self.optimizeSwarm(maxIterations)
         # return best fitness achieved
-        return self.averageFitness()
-
-    def averageFitness(self):
-        sum = 0
-        for cluster in self.findBest().getClusters():
-            sum += cluster.calcFitness()
-        return sum
-
+        return self.globalBest.getFitness()
 
     def initParticles(self):
+        print("pop size", self.popSize)
         for index in range(self.popSize):
+            print("particle created: ")
             self.particles.append(Particle(self.data,self.k))
             self.particles[index].initialize()
+        # set arbitrary global best to begin with
+        self.globalBest = self.particles[0]
 
     def optimizeSwarm(self, maxIterations):
         iteration = 0
-        bestIndiv = self.findBest()
         while (iteration < maxIterations):
+            self.findBest()
+            print("iteration ", iteration)
             iteration += 1
             for indiv in self.particles:
-                indiv.setGlobalBest(bestIndiv.getClusters())
+                indiv.setGlobalBest(self.globalBest.getClusters())
                 indiv.updateParticle()
-
+        self.findBest()
 
     def findBest(self):
-        fitness = math.inf
-        bestIndiv = None
         for indiv in self.particles:
-            if (indiv.getFitness() < fitness):
-                fitness = indiv.getFitness()
-                bestIndiv = indiv
-        return bestIndiv
+            print("global best fitness: ", self.globalBest.getFitness())
+            if (indiv.getFitness() < self.globalBest.getFitness()):
+                print("new best fitness: ", indiv.getFitness())
+                self.globalBest = indiv
 
 
 

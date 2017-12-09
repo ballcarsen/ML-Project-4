@@ -38,8 +38,10 @@ class Particle:
 
 
     def updateParticle(self):
+        #print("fitness before: ", self.kMeans.getFitness())
         # update velocity
         self.updateVelocity()
+        #print("velocity ", self.velocity)
         # move particle towards personal and global best
         self.move()
         # is this statement necessary?
@@ -47,6 +49,7 @@ class Particle:
         self.kMeans.cluster()
         self.kMeans.reCenter()
         self.fitness = self.kMeans.getFitness()
+        #print("fitness after: ", self.fitness)
         #self.updatePersonalBest()
 
     # move particle towards personal and global best
@@ -63,8 +66,10 @@ class Particle:
         for center in range(len(self.clusters)):
             for attribute in range(len(self.clusters[0].mean)):
                 # generate random numbers for velocity update
-                rand1 = random.uniform(0.0,1.0)
-                rand2 = random.uniform(0.0,1.0)
+                c1 = 2 # global effect scalar
+                c2 = 2 # local effect scalar
+                rand1 = random.uniform(0.0,1)
+                rand2 = random.uniform(0.0,1)
                 # set new velocity equals the old velocity plus terms with global and personal best
                 '''
                 print(len(self.globalBest[0].mean))
@@ -76,15 +81,21 @@ class Particle:
                 print(len(self.velocity))
                 
                 print("center: ", center, " attribute: ", attribute)
-                print(self.globalBest[center].mean[attribute])
-                print(self.clusters[center].mean[attribute])
+                
 
                 print("velocity " , self.velocity[center][attribute])
                 '''
-
-                self.velocity[center][attribute] = self.velocity[center][attribute] + \
-                                                   ((rand1 * (self.globalBest[center].mean[attribute] - self.clusters[center].mean[attribute]))) + \
-                                                   ((rand2 * (self.personalBest[center].mean[attribute] - self.clusters[center].mean[attribute])))
+                #print("center: ", center, " attribute: ", attribute)
+                #if (attribute == 0 and center == 0):
+                    #print("global best ", self.globalBest[center].mean[attribute])
+                    #print("personal best ", self.personalBest[center].mean[attribute])
+                    #print("current ", self.clusters[center].mean[attribute])
+                    #print("\n")
+                globalBestTerm = (rand1 * c1 *(self.globalBest[center].mean[attribute] - self.clusters[center].mean[attribute]))
+                localBestTerm = (rand2 * c2 *(self.personalBest[center].mean[attribute] - self.clusters[center].mean[attribute]))
+                #print("global best term: ", globalBestTerm)
+                #print("local best term: ", localBestTerm)
+                self.velocity[center][attribute] = self.velocity[center][attribute] + globalBestTerm + localBestTerm
 
 
     def updatePersonalBest(self):
