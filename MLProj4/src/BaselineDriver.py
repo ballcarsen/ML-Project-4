@@ -42,11 +42,11 @@ for i in range(100):
     mockData.append(point)
 
 
-k = 4
+k = 9
 
 pso = PSOClusterAlg(mockData,k,10)
 
-avgFitness = pso.train(10)
+avgFitness = pso.train(100)
 bestClusters = pso.getBestClusters()
 data = []
 for c in bestClusters:

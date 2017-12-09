@@ -61,7 +61,8 @@ class KMeans:
 
     def reCenter(self):
         for i in self.clusters:
-            i.calcCentroid()
+            if(len(i.clusterPoints) != 0):
+                i.calcCentroid()
             i.clusterPoints = []
         self.cluster()
 

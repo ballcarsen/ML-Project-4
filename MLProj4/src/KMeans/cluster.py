@@ -25,12 +25,13 @@ class Cluster:
     def getMean(self):
         return self.mean
     def calcFitness(self):
-        self.calcCentroid()
+
         sum = 0
         if(len(self.clusterPoints) == 0):
             print("empty cluster")
-            return 0
+            return 10
         else:
+            self.calcCentroid()
             for point in self.clusterPoints:
                 sum += calcDistance(point,self.mean)
                 return (sum / len(self.clusterPoints))

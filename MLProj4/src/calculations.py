@@ -10,7 +10,7 @@ def calcDistance(d1, d2):
     return math.sqrt(distance)
 
 def graph(data, k):
-    colors = ['yellow', 'gray', 'pink', 'orange', 'black']
+    colors = ['yellow', 'gray', 'pink', 'orange', 'black', 'blue','red','green','purple']
     for i in range(k):
         if len(data[i]) > 1:
             #print(data[i] , 'data')
