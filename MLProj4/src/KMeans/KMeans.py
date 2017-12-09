@@ -24,6 +24,7 @@ class KMeans:
 
     def setClusters(self, clusters):
         self.clusters = clusters
+        #print(clusters)
 
     #Assigns 
     def cluster(self):
@@ -40,10 +41,8 @@ class KMeans:
                     minClusterIndex = j
 
             tempCluster = self.clusters[minClusterIndex]
-            if(len(tempCluster.clusterPoints[0]) == 0):
-                tempCluster.clusterPoints[0] = self.dataPoints[i]
-            else:
-                tempCluster.clusterPoints.append(self.dataPoints[i])
+            tempCluster.clusterPoints.append(self.dataPoints[i])
+
             #self.means[minClusterIndex].addPoint(self.dataPoints[i])
         
     def reCluster(self):
@@ -54,8 +53,8 @@ class KMeans:
         while(changed == True):                  
             self.reCenter()
             changed = False
-            for i in range(len(self.clusters) - 1):
-                for j in range(len(self.clusters[i].mean) - 1):
+            for i in range(len(self.clusters)):
+                for j in range(len(self.clusters[i].mean)):
                     if (math.fabs(tempMeans[i][j] - self.clusters[i].mean[j])) > 0.00001:
                         changed = True
                 tempMeans[i] = self.clusters[i].mean
@@ -63,13 +62,13 @@ class KMeans:
     def reCenter(self):
         for i in self.clusters:
             i.calcCentroid()
-            i.clusterPoints = [[]]
+            i.clusterPoints = []
         self.cluster()
 
         #Calculates the distance in between two vectors
     def calcDistance(self, d1, d2):
         distance = 0.0
-        for i in range(len(d1) - 1):
+        for i in range(len(d1)):
             # adds the square of the difference of each variable in the data point
             distance += math.pow((d1[i] - (d2[i])),2) 
         #returns the Euclidean distance between two vectors

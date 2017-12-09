@@ -9,6 +9,7 @@ class PSOClusterAlg:
         self.popSize = popSize # number of particles
         self.particles = []
 
+    # get best set of clusters generated
     def getBestClusters(self):
         return self.findBest().getClusters()
 
