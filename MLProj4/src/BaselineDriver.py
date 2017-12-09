@@ -14,9 +14,9 @@ from PSO.PSOClusterAlg import PSOClusterAlg
 #d1.scale()
 #print(d1.data)
 
-k = 3
+k = 5
 mockData = []
-for i in range(200):
+for i in range(10):
     point = []
     for j in range(2):
         val = rand.uniform(0,.2)
@@ -43,6 +43,8 @@ for i in range(200):
     mockData.append(point)
 
 
+pso = PSOClusterAlg(mockData,k,10)
+
 avgFitness = pso.train(10)
 bestClusters = pso.getBestClusters()
 data = []
@@ -59,7 +61,7 @@ theData = []
 for i in range(5):
     for k in d1.crossValidatedTrain:
         theData.append(k)
-'''
+
 N1 = Network(mockData, k, .005)
 N1.makeNet()
 N1.train()
