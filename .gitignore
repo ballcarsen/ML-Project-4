@@ -1,3 +1,4 @@
 /.metadata/
 *.xml
 *workspace.xml
+/.idea/
