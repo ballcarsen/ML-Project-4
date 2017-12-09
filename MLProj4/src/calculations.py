@@ -10,10 +10,10 @@ def calcDistance(d1, d2):
     return math.sqrt(distance)
 
 def graph(data, k):
-    colors = ['yellow', 'gray', 'pink', 'orange', 'black']
+    colors = ['yellow', 'gray', 'pink', 'orange', 'black', 'blue','red','green','purple']
     for i in range(k):
         if len(data[i]) > 1:
-            print(data[i] , 'data')
+            #print(data[i] , 'data')
             x,y = np.array(data[i]).T
             plt.scatter(x,y, c = colors[i])
     plt.show()

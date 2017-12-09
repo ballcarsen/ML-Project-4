@@ -1,2 +1,3 @@
 /.metadata/
-*.pyc
+*.xml
+*workspace.xml
