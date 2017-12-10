@@ -55,7 +55,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cluster.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="cluster.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/KMeans/cluster.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="371">
@@ -101,11 +101,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="calculations.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="calculations.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/calculations.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1113">
-              <caret line="23" column="113" lean-forward="true" selection-start-line="23" selection-start-column="113" selection-end-line="23" selection-end-column="113" />
+            <state relative-caret-position="998">
+              <caret line="35" column="35" lean-forward="true" selection-start-line="35" selection-start-column="35" selection-end-line="35" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -748,14 +748,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/calculations.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1113">
-          <caret line="23" column="113" lean-forward="true" selection-start-line="23" selection-start-column="113" selection-end-line="23" selection-end-column="113" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/KMeans/cluster.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="371">
@@ -763,6 +755,14 @@
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/calculations.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="998">
+          <caret line="35" column="35" lean-forward="true" selection-start-line="35" selection-start-column="35" selection-end-line="35" selection-end-column="35" />
+          <folding />
         </state>
       </provider>
     </entry>

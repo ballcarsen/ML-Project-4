@@ -33,7 +33,7 @@ def avgSilhouetteFitness(clusters, data):
             clusterSilhouetteValSum += silhouetteVal
         clusterSilhouetteValAvg = clusterSilhouetteValSum / len(cluster)
         totalSum += clusterSilhouetteValAvg
-    return totalSum / len(data)
+    return totalSum / len(clusters)
 
 
 def getSilhouette(b,a):
