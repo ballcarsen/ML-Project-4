@@ -23,7 +23,7 @@ class KMeans:
 
     def setClusters(self, clusters):
         self.clusters = clusters
-        # print(clusters)
+
 
     # Assigns
     def cluster(self):
