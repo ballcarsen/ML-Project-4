@@ -48,7 +48,7 @@ for i in range(100):
     point.append(val)
     mockData.append(point)
 '''
-k = 10
+k = 20
 
 
 k1 = KMeans(data, k)
