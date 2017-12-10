@@ -34,7 +34,7 @@ class Particle:
             self.velocity.append([])
             for attribute in range(len(self.clusters[0].mean)):
                 self.velocity[center].append(0)
-        print(self.velocity)
+        #print(self.velocity)
 
 
     def updateParticle(self):
@@ -66,10 +66,10 @@ class Particle:
         for center in range(len(self.clusters)):
             for attribute in range(len(self.clusters[0].mean)):
                 # generate random numbers for velocity update
-                c1 = 2 # global effect scalar
-                c2 = 2 # local effect scalar
-                rand1 = random.uniform(0.0,1)
-                rand2 = random.uniform(0.0,1)
+                c1 = 4 # global effect scalar
+                c2 = 8 # local effect scalar
+                rand1 = random.uniform(0.0,.1)
+                rand2 = random.uniform(0.0,.1)
                 # set new velocity equals the old velocity plus terms with global and personal best
                 '''
                 print(len(self.globalBest[0].mean))
