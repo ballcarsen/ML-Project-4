@@ -38,9 +38,10 @@ def runNet(data):
 
 runNet(data)
 
+
 def runPSO(data):
-    pso = PSOClusterAlg(data, k, 100)
-    avgFitness = pso.train(30)
+    pso = PSOClusterAlg(data, k, 50)
+    avgFitness = pso.train(20)
     bestClusters = pso.getBestClusters()
     myData = []
     '''

@@ -5,8 +5,8 @@ def calcDistance(d1, d2):
     distance = 0.0
     for i in range(len(d1)):
         # adds the square of the difference of each variable in the data point
-        print(d1[i])
-        print(d2[i])
+        #print(d1[i])
+        #print(d2[i])
         distance += math.pow((d1[i] - (d2[i])), 2)
         # returns the Euclidean distance between two vectors
     return math.sqrt(distance)
