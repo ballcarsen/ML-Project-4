@@ -59,7 +59,7 @@ def findLeastAvgDistToOther(point, cluster, clusters):
 
     for otherCluster in clusters:
         sumDistance = 0
-        if (cluster != otherCluster):
+        if (not equalLists(cluster, otherCluster)):
 
             for otherPoint in otherCluster:
                 sumDistance += calcDistance(point,otherPoint)
@@ -69,3 +69,10 @@ def findLeastAvgDistToOther(point, cluster, clusters):
                 leastAvgDistance = avgDistance
 
     return leastAvgDistance
+
+def equalLists(list1, list2):
+
+    for i in range(len(list1[0])):
+        if (list1[0][i] != list2[0][i]):
+            return False
+    return True

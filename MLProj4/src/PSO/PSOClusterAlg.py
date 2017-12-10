@@ -1,5 +1,6 @@
 import math
 from PSO.Particle import Particle
+import calculations
 
 # algorithm for clustering using PSO
 class PSOClusterAlg:
@@ -18,7 +19,10 @@ class PSOClusterAlg:
         self.initParticles()
         self.optimizeSwarm(maxIterations)
         # return best fitness achieved
-        return self.globalBest.getFitness()
+        self.findBest()
+        return self.globalBest.getSilhouetteFitness()
+
+
 
     def initParticles(self):
         print("pop size", self.popSize)
@@ -42,9 +46,9 @@ class PSOClusterAlg:
 
     def findBest(self):
         for indiv in self.particles:
-            print("global best fitness: ", self.globalBest.getFitness())
-            if (indiv.getFitness() < self.globalBest.getFitness()):
-                print("new best fitness: ", indiv.getFitness())
+            print("global best fitness: ", self.globalBest.getSilhouetteFitness())
+            if (indiv.getSilhouetteFitness() < self.globalBest.getSilhouetteFitness()):
+                print("new best fitness: ", indiv.getSilhouetteFitness())
                 self.globalBest = indiv
 
 
