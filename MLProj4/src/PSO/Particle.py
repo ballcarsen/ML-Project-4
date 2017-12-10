@@ -1,6 +1,7 @@
 from KMeans.KMeans import KMeans
 from KMeans.cluster import Cluster
 import random
+import calculations
 
 # a
 class Particle:
@@ -26,7 +27,7 @@ class Particle:
         # get clusters from kMeans
         self.clusters = self.kMeans.clusters
         # set initial fitness and current best fitness
-        self.fitness = self.kMeans.getFitness()
+        self.fitness = self.getSilhouetteFitness()
         self.bestFitness = self.fitness
         # assign personal best to initial location
         self.personalBest = self.clusters
@@ -39,7 +40,7 @@ class Particle:
 
 
     def updateParticle(self):
-        #print("fitness before: ", self.kMeans.getFitness())
+        #print("fitness before: ", self.getSilhouetteFitness())
         # update velocity
         self.updateVelocity()
         #print("velocity ", self.velocity)
@@ -49,7 +50,7 @@ class Particle:
         self.kMeans.setClusters(self.clusters)
         self.kMeans.cluster()
         self.kMeans.reCenter()
-        self.fitness = self.kMeans.getFitness()
+        self.fitness = self.getSilhouetteFitness()
         #print("fitness after: ", self.fitness)
         #self.updatePersonalBest()
 
@@ -106,5 +107,9 @@ class Particle:
     def setGlobalBest(self, best):
         self.globalBest = best
 
-    def getFitness(self):
-        return self.fitness
+
+    def getSilhouetteFitness(self):
+        bestClusters = []
+        for cluster in self.getClusters():
+            bestClusters.append(cluster.clusterPoints)
+        return calculations.avgSilhouetteFitness(bestClusters, self.data)

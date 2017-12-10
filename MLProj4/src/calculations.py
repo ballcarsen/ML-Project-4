@@ -31,8 +31,9 @@ def avgSilhouetteFitness(clusters, data):
             AvgDistWithin = findAvgDistWithin(point, cluster)
             silhouetteVal = getSilhouette(leastAvgDistToOther,AvgDistWithin)
             clusterSilhouetteValSum += silhouetteVal
-        clusterSilhouetteValAvg = clusterSilhouetteValSum / len(cluster)
-        totalSum += clusterSilhouetteValAvg
+        if(len(cluster) != 0):
+            clusterSilhouetteValAvg = clusterSilhouetteValSum / len(cluster)
+            totalSum += clusterSilhouetteValAvg
     return totalSum / len(clusters)
 
 
@@ -59,13 +60,21 @@ def findLeastAvgDistToOther(point, cluster, clusters):
 
     for otherCluster in clusters:
         sumDistance = 0
-        if not np.array_equal(cluster, otherCluster):
+        if (not equalLists(cluster, otherCluster)):
 
             for otherPoint in otherCluster:
                 sumDistance += calcDistance(point,otherPoint)
-
-            avgDistance = sumDistance / len(otherCluster)
-            if (avgDistance < leastAvgDistance):
-                leastAvgDistance = avgDistance
+            if (len(otherCluster) != 0):
+                avgDistance = sumDistance / len(otherCluster)
+                if (avgDistance < leastAvgDistance):
+                    leastAvgDistance = avgDistance
 
     return leastAvgDistance
+
+def equalLists(list1, list2):
+    if(len(list2) == 0):
+        return False
+    for i in range(len(list1[0])):
+        if (list1[0][i] != list2[0][i]):
+            return False
+    return True
