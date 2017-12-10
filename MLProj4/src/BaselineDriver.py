@@ -50,7 +50,13 @@ for i in range(100):
 '''
 k = 10
 
-pso = PSOClusterAlg(data,k,200)
+
+k1 = KMeans(data, k)
+k1.cluster()
+k1.reCluster()
+print("KMeans fitness: ", k1.getFitness())
+
+pso = PSOClusterAlg(data,k,100)
 
 avgFitness = pso.train(30)
 bestClusters = pso.getBestClusters()
@@ -59,7 +65,9 @@ for c in bestClusters:
     myData.append(c.clusterPoints)
 calculations.graph(myData,k)
 
-print(avgFitness)
+print("PSO fitness: ", avgFitness)
+
+
 
 
 '''
