@@ -13,9 +13,8 @@ class Network:
     def makeNet(self):
         for i in range(self.numClusters):
             self.outputLayer.append(Node(len(self.data[0])))
-            print(self.outputLayer[i].weights)
             self.clusters.append(Cluster())
-            self.clusters[i].clusterPoints.pop()
+            #self.clusters[i].clusterPoints.pop()
 
     def train(self):
         for point in self.data:
@@ -45,7 +44,7 @@ class Network:
         count = 0
         for cluster in self.clusters:
             if len(cluster.clusterPoints) == 0:
-                pass
+                print('emptyClust')
             else:
                 count += 1
                 sum += cluster.calcFitness()

@@ -9,7 +9,7 @@ from Competetive.network import Network
 from KMeans.KMeans import KMeans
 import calculations
 from PSO.PSOClusterAlg import PSOClusterAlg
-
+from dbScan import dbScan
 
 d1 = Data(2)
 d1.readData('../seeds.txt')
@@ -48,7 +48,7 @@ for i in range(100):
     point.append(val)
     mockData.append(point)
 '''
-k = 20
+k = 10
 
 
 k1 = KMeans(data, k)
