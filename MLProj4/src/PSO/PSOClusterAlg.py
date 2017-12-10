@@ -47,7 +47,7 @@ class PSOClusterAlg:
     def findBest(self):
         for indiv in self.particles:
             print("global best fitness: ", self.globalBest.getSilhouetteFitness())
-            if (indiv.getSilhouetteFitness() < self.globalBest.getSilhouetteFitness()):
+            if (indiv.getSilhouetteFitness() > self.globalBest.getSilhouetteFitness()):
                 print("new best fitness: ", indiv.getSilhouetteFitness())
                 self.globalBest = indiv
 
