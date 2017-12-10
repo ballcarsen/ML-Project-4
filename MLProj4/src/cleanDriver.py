@@ -26,6 +26,7 @@ def runK(data, k):
     k1.cluster()
     k1.reCluster()
     return(k1.getFitness())
+
 def multiRunK():
     kFits = []
     for i in range(len(kParams)):
@@ -37,11 +38,13 @@ def multiRunK():
         for i in kFits:
             out.write(str(i))
             out.write('\n')
+
 def runNet(data, k, learningRate):
     N1 = Network(data, k, learningRate)
     N1.makeNet()
     N1.train()
     return(N1.getFitness())
+
 def multiRunNet():
     netFits = []
     for i in range(len(kParams)):
@@ -58,24 +61,25 @@ def multiRunNet():
 def runDB(data, minPoints, epsilon):
     d1 = dbScan(minPoints, epsilon, data)
     return(d1.run())
+
 def multiRunDB():
     for i in range(len(minPoints)):
         for k in range(len(epsilon)):
             print(runDB(data, minPoints[i], epsilon[k]), ' ', minPoints[i], epsilon[k])
-multiRunDB()
+#multiRunDB()
 #multiRunK()
 #multiRunNet()
 
 def runPSO(data):
-    pso = PSOClusterAlg(data, k, 50)
-    avgFitness = pso.train(20)
+    pso = PSOClusterAlg(data, k, 20)
+    fitness = pso.train(5)
+    print("PSO fitness: ", fitness)
+    '''
     bestClusters = pso.getBestClusters()
     myData = []
-    '''
     for c in bestClusters:
         myData.append(c.clusterPoints)
     calculations.graph(myData, k)
     '''
-    print("PSO fitness: ", avgFitness)
 
-#runPSO(data)
+runPSO(data)
