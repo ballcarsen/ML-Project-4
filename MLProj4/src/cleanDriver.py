@@ -13,6 +13,7 @@ d1.getFolds()
 data = d1.crossValidatedTrain[0]
 for i in d1.crossValidatedTest[0]:
     data.append(i)
+k = 20
 learningRates = [.5, .05, .01, .005, .001]
 kParams = [4, 8, 12, 16]
 minPoints = [50, 30, 20, 15, 10, 5, 3]
@@ -77,4 +78,4 @@ def runPSO(data):
     '''
     print("PSO fitness: ", avgFitness)
 
-runPSO(data)
+#runPSO(data)
