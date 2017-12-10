@@ -22,7 +22,7 @@ class PSOClusterAlg:
     def initParticles(self):
         print("pop size", self.popSize)
         for index in range(self.popSize):
-            print("particle created: ")
+            #print("particle created: ")
             self.particles.append(Particle(self.data,self.k))
             self.particles[index].initialize()
         # set arbitrary global best to begin with
