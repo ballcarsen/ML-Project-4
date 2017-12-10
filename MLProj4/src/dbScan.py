@@ -1,6 +1,7 @@
 from KMeans.cluster import Cluster
 from dataPoint import DataPoint
 from calculations import calcDistance as dist
+import calculations
 from calculations import graph
 import random as r
 class dbScan():
@@ -19,7 +20,7 @@ class dbScan():
             self.dataPoints.append(DataPoint(point))
 
     def run(self):
-        toPrint = []
+        clusteredDataPoints = []
         #Initial cluster is 0
         clustNum = 0
         #Point at index of the random number returned in the array of data points will be the intial point to
@@ -50,11 +51,11 @@ class dbScan():
             #Sets the index for the point chosen to a new random number
             randIndex = int(r.uniform(0, len(temp) - 1))
 
-        #Adds a blank cluster object to a list, as well as a blank list to hold the data points
-        #after clustering
+        #Adds a blank cluster object to a list, as well as a blank list to hold the data points after clustering
         for i in range(clustNum + 1):
             self.centers.append(Cluster())
-            toPrint.append([])
+            clusteredDataPoints.append([])
+        clusteredDataPoints.pop()
         #Adds every dataPoint to a cluster object, and adds the value of the data point to the
         #To print array
         clustersUsed = set([])
@@ -66,16 +67,20 @@ class dbScan():
             clustersUsed.add(index)
             if index is not -1:
                 self.centers[index].addPoint(point.point)
-                toPrint[index].append(point.point)
+                clusteredDataPoints[index].append(point.point)
             else:
                 self.centers[len(self.centers) - 1].addPoint(point.point)
-                toPrint[len(toPrint) - 1].append(point.point)
+                #clusteredDataPoints[len(clusteredDataPoints) - 1].append(point.point)
+        print(len(clusteredDataPoints))
         if len(self.centers) > clustNum:
             noise = True
             numNoisePoints = len(self.centers[len(self.centers) - 1].clusterPoints)
-        print(clustersUsed, noise)
         percentNoise = round((numNoisePoints / len(self.dataPoints)) * 100)
-        return([[self.getFiness(noise)] , [clustNum], [percentNoise]])
+        if len(clusteredDataPoints) == 0:
+            sil = 'noise'
+        else:
+            sil = calculations.avgSilhouetteFitness(clusteredDataPoints, self.data)
+        return([[self.getFiness(noise)] , [sil], [clustNum], [percentNoise]])
 
         #Graphing for 2d data
         #if clustNum <= 6:

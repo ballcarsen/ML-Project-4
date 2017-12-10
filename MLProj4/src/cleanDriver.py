@@ -1,11 +1,12 @@
 from Data import Data
+import numpy as np
 import numpy.random as rand
 from Competetive.network import Network
 from KMeans.KMeans import KMeans
 from PSO.PSOClusterAlg import  PSOClusterAlg
 import calculations
 from dbScan import dbScan
-fileName = 'seeds'
+fileName = 'indians2'
 d1 = Data(2)
 d1.readData(fileName + '.txt')
 d1.scale()
@@ -16,8 +17,10 @@ for i in d1.crossValidatedTest[0]:
 k = 20
 learningRates = [.5, .05, .01, .005, .001]
 kParams = [4, 8, 12, 16]
-minPoints = [50, 30, 20, 15, 10, 5, 3]
-epsilon = [.7, .5, .3, .2, .1, .09, .07, .04, .01, .008, .002]
+minPoints = [0.25, 0.15, 0.1, 0.07, 0.05, 0.03, 0.01]
+minPoints = [point * len(data) for point in minPoints]
+minPoints = [round(min) for min in minPoints]
+epsilon = [.7, .5, .3, .2, .1, .05]
 #kParams = [k * len(data) for k in kParams]
 #kParams = [round(k) for k in kParams]
 
@@ -58,11 +61,21 @@ def multiRunNet():
 def runDB(data, minPoints, epsilon):
     d1 = dbScan(minPoints, epsilon, data)
     return(d1.run())
+dbResults = []
+dbResults.append([['Fit'], ['Sil'], ['numClusters'], ['Percent Noise'], ['Min Points'], ['Distance']])
 def multiRunDB():
+
     for i in range(len(minPoints)):
         for k in range(len(epsilon)):
-            print(runDB(data, minPoints[i], epsilon[k]), ' ', minPoints[i], epsilon[k])
+            res = runDB(data, minPoints[i], epsilon[k])
+            res.append([minPoints[i]])
+            res.append(epsilon[k])
+            dbResults.append(res)
 multiRunDB()
+for i in dbResults:
+    print(i)
+#dbToSave = np.array(dbResults)
+#np.savetxt('db' + fileName + 'out', dbToSave)
 #multiRunK()
 #multiRunNet()
 

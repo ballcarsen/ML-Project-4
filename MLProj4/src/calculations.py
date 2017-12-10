@@ -33,7 +33,7 @@ def avgSilhouetteFitness(clusters, data):
             clusterSilhouetteValSum += silhouetteVal
         clusterSilhouetteValAvg = clusterSilhouetteValSum / len(cluster)
         totalSum += clusterSilhouetteValAvg
-    return totalSum / len(data)
+    return totalSum / len(clusters)
 
 
 def getSilhouette(b,a):
@@ -59,7 +59,7 @@ def findLeastAvgDistToOther(point, cluster, clusters):
 
     for otherCluster in clusters:
         sumDistance = 0
-        if (cluster != otherCluster):
+        if not np.array_equal(cluster, otherCluster):
 
             for otherPoint in otherCluster:
                 sumDistance += calcDistance(point,otherPoint)
