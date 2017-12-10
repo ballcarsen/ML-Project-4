@@ -2,6 +2,7 @@ from Data import Data
 import numpy.random as rand
 from Competetive.network import Network
 from KMeans.KMeans import KMeans
+from PSO.PSOClusterAlg import  PSOClusterAlg
 import calculations
 from dbScan import dbScan
 fileName = 'seeds'
@@ -63,3 +64,17 @@ def multiRunDB():
 multiRunDB()
 #multiRunK()
 #multiRunNet()
+
+def runPSO(data):
+    pso = PSOClusterAlg(data, k, 50)
+    avgFitness = pso.train(20)
+    bestClusters = pso.getBestClusters()
+    myData = []
+    '''
+    for c in bestClusters:
+        myData.append(c.clusterPoints)
+    calculations.graph(myData, k)
+    '''
+    print("PSO fitness: ", avgFitness)
+
+runPSO(data)

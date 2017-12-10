@@ -2,6 +2,7 @@ from KMeans.KMeans import KMeans
 from KMeans.cluster import Cluster
 import random
 
+# a
 class Particle:
 
     def __init__(self, data , k ):

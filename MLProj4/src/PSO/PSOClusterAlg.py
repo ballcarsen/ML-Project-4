@@ -1,8 +1,9 @@
 import math
 from PSO.Particle import Particle
 
+# algorithm for clustering using PSO
 class PSOClusterAlg:
-
+    # initialize algorithm by setting parameters
     def __init__(self, data , k, popSize ):
         self.data = data
         self.k = k # number of clusters
