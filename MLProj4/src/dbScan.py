@@ -12,6 +12,7 @@ class dbScan():
         self.currentCluster = -1
         self.centers = []
         self.makeDataPoints()
+        self.resultNumClust = None
 
     def makeDataPoints(self):
         for point in self.data:
@@ -48,6 +49,7 @@ class dbScan():
                 del temp[randIndex]
             #Sets the index for the point chosen to a new random number
             randIndex = int(r.uniform(0, len(temp) - 1))
+
         #Adds a blank cluster object to a list, as well as a blank list to hold the data points
         #after clustering
         for i in range(clustNum + 1):
@@ -55,24 +57,25 @@ class dbScan():
             toPrint.append([])
         #Adds every dataPoint to a cluster object, and adds the value of the data point to the
         #To print array
+        clustersUsed = set([])
+        noise = False
+        numNoisePoints = 0
         for point in self.dataPoints:
 
             index = point.clusterVal
-            print(index)
-            noise = False
+            clustersUsed.add(index)
             if index is not -1:
                 self.centers[index].addPoint(point.point)
                 toPrint[index].append(point.point)
             else:
-                noise = True
                 self.centers[len(self.centers) - 1].addPoint(point.point)
                 toPrint[len(toPrint) - 1].append(point.point)
-        for i in self.centers:
-            print(i.clusterPoints)
-        if len(self.centers) == 1 or 0:
-            return('noise')
-        else:
-            return(self.getFiness(noise) , 'Fitness')
+        if len(self.centers) > clustNum:
+            noise = True
+            numNoisePoints = len(self.centers[len(self.centers) - 1].clusterPoints)
+        print(clustersUsed, noise)
+        percentNoise = round((numNoisePoints / len(self.dataPoints)) * 100)
+        return([[self.getFiness(noise)] , [clustNum], [percentNoise]])
 
         #Graphing for 2d data
         #if clustNum <= 6:
@@ -105,11 +108,13 @@ class dbScan():
                     if i.visited == False:
                         i.visited = True
                         toCheck.append(i)
-
+        #Returns the current cluster index + 1 if scan made a new cluster
         if hadVal:
             return cluster + 1
+        #Returns the current cluster number if no cluster was made
         else:
             return cluster
+
     #After a point has been checked to be a core, it returns a list of the points that
     #are within epsilon of the core point, returns an empy list if the point checked was not a valid core
     def calcPointsInRegion(self, centerPoint):
@@ -122,19 +127,19 @@ class dbScan():
         else:
             centerPoint.visited = True
             return []
+
     def getFiness(self, noise):
         sum = 0
         count = 0
         if noise == True:
-            self.centers.pop
-        for i in self.centers:
-            if len(i.clusterPoints) == 0:
-                pass
+            self.centers.pop()
+        if len(self.centers) == 0:
+            self.resultNumClust = count
+            return('only noise')
+        else:
+            for cluster in self.centers:
+                sum += cluster.calcFitness()
+                count += 1
+            self.resultNumClust = count
+            return(sum / len(self.centers))
 
-        else:
-            sum += i.calcFitness()
-            count += 1
-        if count == 0:
-            return ('noise')
-        else:
-            return (sum / count)
