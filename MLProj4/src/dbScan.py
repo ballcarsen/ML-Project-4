@@ -12,7 +12,6 @@ class dbScan():
         self.currentCluster = -1
         self.centers = []
         self.makeDataPoints()
-        self.run()
 
     def makeDataPoints(self):
         for point in self.data:
@@ -60,19 +59,27 @@ class dbScan():
 
             index = point.clusterVal
             print(index)
+            noise = False
             if index is not -1:
                 self.centers[index].addPoint(point.point)
                 toPrint[index].append(point.point)
             else:
+                noise = True
                 self.centers[len(self.centers) - 1].addPoint(point.point)
                 toPrint[len(toPrint) - 1].append(point.point)
+        for i in self.centers:
+            print(i.clusterPoints)
+        if len(self.centers) == 1 or 0:
+            return('noise')
+        else:
+            return(self.getFiness(noise) , 'Fitness')
 
         #Graphing for 2d data
-        if clustNum <= 6:
-            print(toPrint)
-            graph(toPrint, clustNum + 1)
-        else:
-            print('change params there are ', clustNum, ' clusters')
+        #if clustNum <= 6:
+            #print(toPrint)
+            #graph(toPrint, clustNum + 1)
+        #else:
+            #print('change params there are ', clustNum, ' clusters')
     #Passed the current cluster number, and a point to check as a core
     def scan(self, cluster, point):
         #Holds the points that need to be checked as cores
@@ -115,4 +122,19 @@ class dbScan():
         else:
             centerPoint.visited = True
             return []
+    def getFiness(self, noise):
+        sum = 0
+        count = 0
+        if noise == True:
+            self.centers.pop
+        for i in self.centers:
+            if len(i.clusterPoints) == 0:
+                pass
 
+        else:
+            sum += i.calcFitness()
+            count += 1
+        if count == 0:
+            return ('noise')
+        else:
+            return (sum / count)
