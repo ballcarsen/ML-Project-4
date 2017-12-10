@@ -17,7 +17,7 @@ d1.scale()
 d1.getFolds()
 data = d1.crossValidatedTrain[0]
 for i in d1.crossValidatedTest[0]:
-    print(i)
+    #print(i)
     data.append(i)
 
 '''
@@ -57,7 +57,6 @@ k1.reCluster()
 print("KMeans fitness: ", k1.getFitness())
 
 pso = PSOClusterAlg(data,k,100)
-
 avgFitness = pso.train(30)
 bestClusters = pso.getBestClusters()
 myData = []
