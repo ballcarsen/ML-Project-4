@@ -1,0 +1,3 @@
+Carsen: The 3 baseline methods
+Brett: Particle swarm optimizaiton
+Kirby:Ant colony optimization

@@ -9,6 +9,7 @@ class Ant():
         self.row = random.randint(0, row - 1)
         self.column = random.randint(0, column - 1)
         self.hand = None
+        self.q_drop = False
         self.sig = sig # Tune
         self.alpha = alpha # Tune
         self.k1 = 1 # Tune
@@ -16,7 +17,7 @@ class Ant():
 
     def move(self, neighborhood, max_move, cemetery): # generate a new random point (within a threshold) and move there
         placed = False
-        #cemetery.dump()
+        cemetery.dump()
         while not placed:
             print("Self", self.row, self.column)
             column = random.randint(-max_move, max_move)
@@ -24,17 +25,23 @@ class Ant():
             if (column == 0 and row == 0): # if not a good move, redo
                 print("Move", row, column)
                 #cemetery.dump()
+                print("Repeat")
                 continue
             temp_row = self.row + row
             temp_col = self.column + column
             if temp_row < 0 or temp_col < 0 or temp_col >= cemetery.get_column() or temp_row >= cemetery.get_row():
                 print("Move", row, column)
                 #cemetery.dump()
+                print("Repeat")
                 continue
-            if type(cemetery.get_grave(temp_row, temp_col)) is Ant:
+            if cemetery.get_grave(temp_row, temp_col) and self.hand:
+                max_move += 1
+                print("Move", row, column)
+                print("Repeat")
                 continue
+            if type(cemetery.get_grave(self.row, self.column)) is Ant:
+                cemetery.set_grave(self.row, self.column, None)
             print("Move", row, column)
-            cemetery.set_grave(self.row, self.column, None)
             self.row = temp_row
             self.column = temp_col
             #print("Column: %s, Row: %s\nCem_col: %s, Cem_row: %s" % (column, row, cemetery.get_column(), cemetery.get_row()))
@@ -43,6 +50,7 @@ class Ant():
                 self.drop(cemetery, neighborhood)
             elif not self.full_hand() and cemetery.get_grave(self.row, self.column):
                 self.pick_up(cemetery, neighborhood)
+            #cemetery.set_grave(self.row, self.column, self)
             placed = True
 
 
@@ -62,10 +70,12 @@ class Ant():
             print("POINT PICKED UP")
 
     def drop(self, cemetery, neighborhood):
-        similarity = self.calc_similarity(self.row, self.column, cemetery, neighborhood)
-        probability = (similarity / (self.k2 + similarity))**2
+        #similarity = self.calc_similarity(self.row, self.column, cemetery, neighborhood)
+        #probability = (similarity / (self.k2 + similarity))**2
+        probability = (self.k1 / (self.k1 + self.calc_similarity(self.row, self.column, cemetery, neighborhood)))**2
         if probability > 0.5:
             cemetery.set_grave(self.row, self.column, self.hand)
+            #self.q_drop = True
             self.hand = None
             print("POINT DROPPED")
 

@@ -32,9 +32,13 @@ class ACC():
         for k in range(self.k):
             for n in range(len(self.data)):
                 for m in range(len(self.data[n])):
-                    sigma += self.weights * self.distance()
+                    sigma += self.weights[n][] * self.distance()
 
     def distance(self, vec_1, vec_2):
+        sigma = 0
+        for i in range(len(vec_1)):
+            sigma += (vec1 - vec_2)**2
+        return sigma
 
     # Randomly initialize the assigned cluster
     def init_colony(self):

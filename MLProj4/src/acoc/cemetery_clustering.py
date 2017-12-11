@@ -64,7 +64,14 @@ class Cemetery():
 
     def dump(self):
         for r in self.cemetery:
-            print(r)
+            for c in r:
+                if type(c) is Ant:
+                    print("Ant1", end=' ')
+                elif c:
+                    print("Data", end=' ')
+                else:
+                    print(c, end=' ')
+            print()
 
 
 
