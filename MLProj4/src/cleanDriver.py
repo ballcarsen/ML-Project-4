@@ -5,7 +5,7 @@ from KMeans.KMeans import KMeans
 from PSO.PSOClusterAlg import  PSOClusterAlg
 import calculations
 from dbScan import dbScan
-fileName = 'energy'
+fileName = 'HTRU2.trim'
 d1 = Data(2)
 d1.readData(fileName + '.txt')
 d1.scale()
@@ -21,7 +21,7 @@ epsilon = [.7, .5, .3, .2, .1, .09, .07, .04, .01, .008, .002]
 #kParams = [k * len(data) for k in kParams]
 #kParams = [round(k) for k in kParams]
 
-k = 5
+k = 4
 
 
 def runK(data, k):
@@ -73,17 +73,12 @@ def multiRunDB():
 #multiRunK()
 #multiRunNet()
 
+# run the particle swarm optimization algorithm
 def runPSO(data,k,pop,c1,c2):
     # parameters: dataset, k , population size, global effect scalar (c1), local effect scalar (c2)
     pso = PSOClusterAlg(data, k, pop,c1,c2)
     fitness = pso.train(3)
     print("PSO fitness: ", fitness)
-    '''
-    bestClusters = pso.getBestClusters()
-    myData = []
-    for c in bestClusters:
-        myData.append(c.clusterPoints)
-    calculations.graph(myData, k)
-    '''
 
+# parameters: dataset, k , population size, global effect scalar (c1), local effect scalar (c2)
 runPSO(data,k,20,8,8)

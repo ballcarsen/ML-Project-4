@@ -17,24 +17,24 @@ class PSOClusterAlg:
     def getBestClusters(self):
         return self.globalBest.getClusters()
 
+    # our main method for pso, runs every stage of the algorithm
     def train(self, maxIterations):
         self.initParticles()
         self.optimizeSwarm(maxIterations)
         # return best fitness achieved
-        self.findBest()
         return self.globalBest.getSilhouetteFitness()
 
 
-
+    # initializes particles using kmeans to get initial clusters
     def initParticles(self):
         print("pop size", self.popSize)
         for index in range(self.popSize):
-            #print("particle created: ")
             self.particles.append(Particle(self.data,self.k,self.c1,self.c2 ))
             self.particles[index].initialize()
         # set arbitrary global best to begin with
         self.globalBest = self.particles[0]
 
+    # after swarm is initialized, this method moves the particles towards optima
     def optimizeSwarm(self, maxIterations):
         iteration = 0
         while (iteration < maxIterations):
@@ -42,16 +42,23 @@ class PSOClusterAlg:
             print("iteration ", iteration)
             iteration += 1
             for indiv in self.particles:
+                # make sure each particle has a reference to the current global best particle
                 indiv.setGlobalBest(self.globalBest.getClusters())
+                # move particles
                 indiv.updateParticle()
         self.findBest()
 
+    # method for finding the best particle in the swarm at the beginning of each iteration
     def findBest(self):
+        currentGlobalBestFitness = self.globalBest.getSilhouetteFitness()
+        print("global best fitness: ", currentGlobalBestFitness)
         for indiv in self.particles:
-            print("global best fitness: ", self.globalBest.getSilhouetteFitness())
-            if (indiv.getSilhouetteFitness() > self.globalBest.getSilhouetteFitness()):
-                print("new best fitness: ", indiv.getSilhouetteFitness())
+            indivFitness = indiv.getSilhouetteFitness()
+            print("individual fitness ", indivFitness)
+            if (indivFitness > currentGlobalBestFitness):
+                print("new best fitness: ", indivFitness)
                 self.globalBest = indiv
+                currentGlobalBestFitness = self.globalBest.getSilhouetteFitness()
 
 
 

@@ -40,7 +40,7 @@ class Particle:
                 self.velocity[center].append(0)
         #print(self.velocity)
 
-
+    # main update method for particle
     def updateParticle(self):
         #print("fitness before: ", self.getSilhouetteFitness())
         # update velocity

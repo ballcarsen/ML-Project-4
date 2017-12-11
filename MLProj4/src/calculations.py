@@ -21,7 +21,7 @@ def graph(data, k):
             plt.scatter(x,y, c = colors[i])
     plt.show()
 
-# takes in clusters as 2D list of datapoints by cluster (3D when you consider each point is a list of attributes)
+# calculates the average silhouette coefficient for all points in the dataset
 def avgSilhouetteFitness(clusters, data):
     totalSum = 0
     for cluster in clusters:
