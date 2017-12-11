@@ -1,9 +1,11 @@
+#imports
 from KMeans.cluster import Cluster
 from dataPoint import DataPoint
 from calculations import calcDistance as dist
 import calculations
 from calculations import graph
 import random as r
+#Db scan algorithm for clustering
 class dbScan():
     def __init__(self, minPoints, epsilon, data):
         self.minPoints = minPoints
@@ -82,12 +84,6 @@ class dbScan():
             sil = calculations.avgSilhouetteFitness(clusteredDataPoints, self.data)
         return([[self.getFiness(noise)] , [sil], [clustNum], [percentNoise]])
 
-        #Graphing for 2d data
-        #if clustNum <= 6:
-            #print(toPrint)
-            #graph(toPrint, clustNum + 1)
-        #else:
-            #print('change params there are ', clustNum, ' clusters')
     #Passed the current cluster number, and a point to check as a core
     def scan(self, cluster, point):
         #Holds the points that need to be checked as cores
@@ -132,7 +128,7 @@ class dbScan():
         else:
             centerPoint.visited = True
             return []
-
+    #Returns the fitness of the clustered data set
     def getFiness(self, noise):
         sum = 0
         count = 0
