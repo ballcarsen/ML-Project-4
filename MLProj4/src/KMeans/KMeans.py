@@ -1,10 +1,12 @@
+#Imports
 import random
 import math
 import numpy as np
 import matplotlib.pyplot as plt
 from KMeans import cluster
+import calculations as calc
 
-
+#Kmeans clustering
 class KMeans:
     def __init__(self, dataPoints, k):
         self.k = k
@@ -25,14 +27,16 @@ class KMeans:
         self.clusters = clusters
 
 
-    # Assigns
+    # Assigns each data point to the closest center
     def cluster(self):
-
+        #for all data points
         for i in range(len(self.dataPoints)):
             distance = self.calcDistance(self.dataPoints[i], self.clusters[0].mean)
+            #Minimum distance from the point to a center
             minD = distance
+            #Corresponding cluster index closest to the point i
             minClusterIndex = 0
-
+            #Calcualtes the distance from the point i, to all the cluster centers
             for j in range(1, len(self.clusters)):
                 distance = self.calcDistance(self.dataPoints[i], self.clusters[j].mean)
                 if distance < minD:
@@ -42,16 +46,18 @@ class KMeans:
             tempCluster = self.clusters[minClusterIndex]
             tempCluster.clusterPoints.append(self.dataPoints[i])
 
-            # self.means[minClusterIndex].addPoint(self.dataPoints[i])
-
+    #Runs until there has been no change in cluster centers
     def reCluster(self):
         changed = True
         tempMeans = [[0 for i in range(len(self.clusters[0].mean))] for j in range(self.k)]
         for i in range(len(self.clusters) - 1):
             tempMeans[i] = self.clusters[i].mean
+        #While there is a difference in the cluter centers from the previous iteration
         while (changed == True):
+            #Re assings each data point to the new cluster center
             self.reCenter()
             changed = False
+            #Checks to see if there is a difference
             for i in range(len(self.clusters)):
                 for j in range(len(self.clusters[i].mean)):
                     if (math.fabs(tempMeans[i][j] - self.clusters[i].mean[j])) > 0.00001:
@@ -59,14 +65,18 @@ class KMeans:
                 tempMeans[i] = self.clusters[i].mean
 
     def reCenter(self):
+        #for each cluster
         for i in self.clusters:
+            #checks to see if a cluster is empty
             if (len(i.clusterPoints) != 0):
+                #Recalculates the clusters center
                 i.calcCentroid()
             i.clusterPoints = []
+        #Re assinges each data point
         self.cluster()
 
-        # Calculates the distance in between two vectors
 
+    # Calculates the distance in between two vectors
     def calcDistance(self, d1, d2):
         distance = 0.0
         for i in range(len(d1)):
@@ -75,23 +85,13 @@ class KMeans:
             # returns the Euclidean distance between two vectors
         return math.sqrt(distance)
 
-    def graph(self):
-        print(self.clusters[0].clusterPoints)
 
     def print(self):
         for i in self.clusters:
             print(i.clusterPoints, 'point')
-
+    #Returns the fitness of the clsutered data set
     def getFitness(self):
-        sum = 0
+        data = []
         for cluster in self.clusters:
-            sum += cluster.calcFitness()
-        return (sum / self.k)
-
-
-if __name__ == "__main__":
-    data = [[1, 1], [1, 1], [2, 2], [2, 2], [5, 5]]
-    means1 = KMeans(data, 2)
-    means1.cluster()
-    means1.reCluster()
-    means1.graph()
+            data.append(cluster.clusterPoints)
+        return(calc.avgSilhouetteFitness(data, self.dataPoints))

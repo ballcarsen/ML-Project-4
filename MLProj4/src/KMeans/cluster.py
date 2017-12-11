@@ -1,7 +1,8 @@
+#imports
 import math
 from calculations import calcDistance
 
-
+#Cluster object, represents a cluster of data points
 class Cluster:
     def __init__(self, mean=0):
 
@@ -28,7 +29,7 @@ class Cluster:
 
     def getMean(self):
         return self.mean
-
+    #Calculates the fitness of the cluster
     def calcFitness(self):
 
         sum = 0
