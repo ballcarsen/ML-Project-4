@@ -6,7 +6,9 @@ import calculations
 # a
 class Particle:
 
-    def __init__(self, data , k ):
+    def __init__(self, data , k, c1, c2 ):
+        self.c1 = c1
+        self.c2 = c2
         self.data = data
         self.k = k
         self.personalBest = [[]]
@@ -67,9 +69,7 @@ class Particle:
         #for every attribute of every center: set velocity
         for center in range(len(self.clusters)):
             for attribute in range(len(self.clusters[0].mean)):
-                # generate random numbers for velocity update
-                c1 = 4 # global effect scalar
-                c2 = 8 # local effect scalar
+
                 rand1 = random.uniform(0.0,.1)
                 rand2 = random.uniform(0.0,.1)
                 # set new velocity equals the old velocity plus terms with global and personal best
@@ -93,8 +93,8 @@ class Particle:
                     #print("personal best ", self.personalBest[center].mean[attribute])
                     #print("current ", self.clusters[center].mean[attribute])
                     #print("\n")
-                globalBestTerm = (rand1 * c1 *(self.globalBest[center].mean[attribute] - self.clusters[center].mean[attribute]))
-                localBestTerm = (rand2 * c2 *(self.personalBest[center].mean[attribute] - self.clusters[center].mean[attribute]))
+                globalBestTerm = (rand1 * self.c1 *(self.globalBest[center].mean[attribute] - self.clusters[center].mean[attribute]))
+                localBestTerm = (rand2 * self.c2 *(self.personalBest[center].mean[attribute] - self.clusters[center].mean[attribute]))
                 #print("global best term: ", globalBestTerm)
                 #print("local best term: ", localBestTerm)
                 self.velocity[center][attribute] = self.velocity[center][attribute] + globalBestTerm + localBestTerm

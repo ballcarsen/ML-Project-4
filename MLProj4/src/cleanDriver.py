@@ -5,7 +5,7 @@ from KMeans.KMeans import KMeans
 from PSO.PSOClusterAlg import  PSOClusterAlg
 import calculations
 from dbScan import dbScan
-fileName = 'seeds'
+fileName = 'energy'
 d1 = Data(2)
 d1.readData(fileName + '.txt')
 d1.scale()
@@ -13,13 +13,16 @@ d1.getFolds()
 data = d1.crossValidatedTrain[0]
 for i in d1.crossValidatedTest[0]:
     data.append(i)
-k = 20
+
 learningRates = [.5, .05, .01, .005, .001]
 kParams = [4, 8, 12, 16]
 minPoints = [50, 30, 20, 15, 10, 5, 3]
 epsilon = [.7, .5, .3, .2, .1, .09, .07, .04, .01, .008, .002]
 #kParams = [k * len(data) for k in kParams]
 #kParams = [round(k) for k in kParams]
+
+k = 5
+
 
 def runK(data, k):
     k1 = KMeans(data, k)
@@ -70,9 +73,10 @@ def multiRunDB():
 #multiRunK()
 #multiRunNet()
 
-def runPSO(data):
-    pso = PSOClusterAlg(data, k, 20)
-    fitness = pso.train(5)
+def runPSO(data,k,pop,c1,c2):
+    # parameters: dataset, k , population size, global effect scalar (c1), local effect scalar (c2)
+    pso = PSOClusterAlg(data, k, pop,c1,c2)
+    fitness = pso.train(3)
     print("PSO fitness: ", fitness)
     '''
     bestClusters = pso.getBestClusters()
@@ -82,4 +86,4 @@ def runPSO(data):
     calculations.graph(myData, k)
     '''
 
-runPSO(data)
+runPSO(data,k,20,8,8)

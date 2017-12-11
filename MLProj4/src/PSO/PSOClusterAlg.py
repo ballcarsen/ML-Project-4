@@ -5,7 +5,9 @@ import calculations
 # algorithm for clustering using PSO
 class PSOClusterAlg:
     # initialize algorithm by setting parameters
-    def __init__(self, data , k, popSize ):
+    def __init__(self, data , k, popSize, c1, c2):
+        self.c1 = c1
+        self.c2 = c2
         self.data = data
         self.k = k # number of clusters
         self.popSize = popSize # number of particles
@@ -28,7 +30,7 @@ class PSOClusterAlg:
         print("pop size", self.popSize)
         for index in range(self.popSize):
             #print("particle created: ")
-            self.particles.append(Particle(self.data,self.k))
+            self.particles.append(Particle(self.data,self.k,self.c1,self.c2 ))
             self.particles[index].initialize()
         # set arbitrary global best to begin with
         self.globalBest = self.particles[0]
