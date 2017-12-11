@@ -17,9 +17,9 @@ for line in f:
 f.close()
 
 #acc = ACC(ants, epochs, size, neighborhood size, data, max_move, alpha, sig)
-acc = ACC(100, 1000, 4, 10, data, 2, 1, 1)
+acc = ACC(2, 5, 4, 2, data, 2, 1, 1)
 #acc.print_cemetery()
 acc.output()
 acc.cluster()
-acc.output()
-acc.show()
+#acc.output()
+#acc.show()

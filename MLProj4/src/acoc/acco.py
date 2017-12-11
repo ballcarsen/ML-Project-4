@@ -54,7 +54,7 @@ class AntClustering():
                     #print("None", end=' ')
                     pass
         #plt.pause(0.01)
-        plt.clf()
+        #plt.clf()
         plt.scatter(x, y, s=1)
         plt.grid()
         plt.draw()
