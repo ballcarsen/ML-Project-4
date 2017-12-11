@@ -20,9 +20,9 @@ for i in d1.crossValidatedTest[0]:
     #print(i)
     data.append(i)
 
-'''
+
 mockData = []
-for i in range(100):
+for i in range(20):
     point = []
     val = rand.uniform(0,.25)
     point.append(val)
@@ -49,15 +49,14 @@ for i in range(100):
     mockData.append(point)
 '''
 k = 10
-
-
 k1 = KMeans(data, k)
 k1.cluster()
 k1.reCluster()
 print("KMeans fitness: ", k1.getFitness())
-
-pso = PSOClusterAlg(data,k,100)
-avgFitness = pso.train(30)
+'''
+k = 4
+pso = PSOClusterAlg(mockData,k,50,1,1)
+avgFitness = pso.train(5)
 bestClusters = pso.getBestClusters()
 myData = []
 for c in bestClusters:
