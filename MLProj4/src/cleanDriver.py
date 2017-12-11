@@ -6,7 +6,7 @@ from KMeans.KMeans import KMeans
 from PSO.PSOClusterAlg import  PSOClusterAlg
 import calculations
 from dbScan import dbScan
-fileName = 'indians2'
+fileName = 'seeds'
 d1 = Data(2)
 d1.readData(fileName + '.txt')
 d1.scale()
@@ -16,7 +16,7 @@ for i in d1.crossValidatedTest[0]:
     data.append(i)
 k = 20
 learningRates = [.5, .05, .01, .005, .001]
-kParams = [4, 8, 12, 16]
+kParams = [2,4,8, 16]
 minPoints = [0.25, 0.15, 0.1, 0.07, 0.05, 0.03, 0.01]
 minPoints = [point * len(data) for point in minPoints]
 minPoints = [round(min) for min in minPoints]
@@ -34,7 +34,7 @@ def multiRunK():
     kFits = []
     for i in range(len(kParams)):
         kFits.append([kParams[i]])
-        for k in range(30):
+        for k in range(5):
             fitness = runK(data, kParams[i])
             kFits[i].append(fitness)
     with open('KMeans' + fileName + 'Out', 'w') as out:
@@ -50,13 +50,15 @@ def runNet(data, k, learningRate):
 
 def multiRunNet():
     netFits = []
+    count = 0
     for i in range(len(kParams)):
         for k in range(len(learningRates)):
             netFits.append([kParams[i], learningRates[k]])
-            for j in range(30):
+            for j in range(5):
                 print(kParams[i], ' ',learningRates[k], ' iter ', j)
                 fitness = runNet(data, kParams[i], learningRates[k])
-                netFits[i].append(fitness)
+                netFits[count].append(fitness)
+            count += 1
     with open('CompNet' + fileName + 'Out', 'w') as out:
         for i in netFits:
             out.write(str(i))
@@ -72,18 +74,18 @@ def multiRunDB():
     for i in range(len(minPoints)):
         for k in range(len(epsilon)):
             print(runDB(data, minPoints[i], epsilon[k]), ' ', minPoints[i], epsilon[k])
-#multiRunDB()
             res = runDB(data, minPoints[i], epsilon[k])
             res.append([minPoints[i]])
             res.append(epsilon[k])
             dbResults.append(res)
-multiRunDB()
-for i in dbResults:
-    print(i)
+#multiRunDB()
+#for i in dbResults:
+    #print(i)
 #dbToSave = np.array(dbResults)
 #np.savetxt('db' + fileName + 'out', dbToSave)
-#multiRunK()
 #multiRunNet()
+#multiRunK()
+
 
 def runPSO(data):
     pso = PSOClusterAlg(data, k, 20)

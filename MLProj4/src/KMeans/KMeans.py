@@ -3,6 +3,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 from KMeans import cluster
+import calculations as calc
 
 
 class KMeans:
@@ -83,10 +84,18 @@ class KMeans:
             print(i.clusterPoints, 'point')
 
     def getFitness(self):
+        data = []
+        for cluster in self.clusters:
+            data.append(cluster.clusterPoints)
+        return(calc.avgSilhouetteFitness(data, self.dataPoints))
+'''
+    def getFitness(self):
         sum = 0
+        data = []
         for cluster in self.clusters:
             sum += cluster.calcFitness()
         return (sum / self.k)
+'''
 
 
 if __name__ == "__main__":

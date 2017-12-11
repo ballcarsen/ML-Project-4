@@ -1,5 +1,6 @@
 from KMeans.cluster import Cluster
 from Competetive.node import Node
+from calculations import avgSilhouetteFitness as fit
 class Network:
     def __init__(self,data, numClusters, learningRate):
         self.learningRate = learningRate
@@ -42,10 +43,11 @@ class Network:
     def getFitness(self):
         sum = 0
         count = 0
+        data = []
         for cluster in self.clusters:
             if len(cluster.clusterPoints) == 0:
-                print('emptyClust')
+                pass
             else:
-                count += 1
-                sum += cluster.calcFitness()
-        return (sum / count)
+                data.append(cluster.clusterPoints)
+        return(fit(data, self.data))
+
